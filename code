@@ -1,0 +1,110 @@
+#import library
+library(tidyverse)
+library(readr)
+kNN <- function(k,x.train,y.train,x.pred) {
+  ## Initialization:
+  n.pred <- length(x.pred); y.pred <- numeric(n.pred)
+  ## Main Loop
+  for (i in 1:n.pred){
+    d <- abs(x.train - x.pred[i])
+    dstar = d[order(d)[k]]
+    y.pred[i] <- mean(y.train[d <= dstar])
+  }
+   ## Return the vector of predictions
+  invisible(y.pred)
+}
+train.data <- read.csv("AutoTrain.csv")
+test.data <- read.csv("AutoTest.csv")
+#View(train.data)
+#View(test.data)
+x.train=traindata$weight
+y.train=traindata$mpg
+x.pred=testdata$weight
+y.actual=testdata$mpg
+
+##trials with different k value
+final_TrainPrediction2 = kNN(2, traindata$weight , traindata$mpg, traindata$weight)
+print(final_TrainPrediction2)
+final_TrainPrediction5 = kNN(5, traindata$weight , traindata$mpg, traindata$weight)
+print(final_TrainPrediction5)
+final_TrainPrediction10 = kNN(10, traindata$weight , traindata$mpg, traindata$weight)
+print(final_TrainPrediction10)
+final_TrainPrediction20 = kNN(20, traindata$weight , traindata$mpg, traindata$weight)
+print(final_TrainPrediction20)
+final_TrainPrediction30 = kNN(30, traindata$weight , traindata$mpg, traindata$weight)
+print(final_TrainPrediction30)
+final_TrainPrediction50 = kNN(50, traindata$weight , traindata$mpg, traindata$weight)
+print(final_TrainPrediction50)
+final_TrainPrediction100 = kNN(100, traindata$weight , traindata$mpg, traindata$weight)
+print(final_TrainPrediction)
+
+## calculating Mean Squared Error for different K values during Training
+MSE = mean((traindata$mpg- final_TrainPrediction2)^2)
+MSE
+MSE = mean((traindata$mpg- final_TrainPrediction5)^2)
+MSE
+MSE = mean((traindata$mpg- final_TrainPrediction10)^2)
+MSE
+MSE = mean((traindata$mpg- final_TrainPrediction20)^2)
+MSE
+MSE = mean((traindata$mpg- final_TrainPrediction30)^2)
+MSE
+MSE = mean((traindata$mpg- final_TrainPrediction50)^2)
+MSE
+MSE = mean((traindata$mpg- final_TrainPrediction100)^2)
+MSE
+final_TestPrediction2 = kNN(2, traindata$weight , traindata$mpg, testdata$weight)
+print(final_TestPrediction2)
+final_TestPrediction5 = kNN(5, traindata$weight , traindata$mpg, testdata$weight)
+print(final_TestPrediction5)
+final_TestPrediction10 = kNN(10, traindata$weight , traindata$mpg, testdata$weight)
+print(final_TestPrediction10)
+final_TestPrediction20 = kNN(20, traindata$weight , traindata$mpg, testdata$weight)
+print(final_TestPrediction20)
+final_TestPrediction30 = kNN(30, traindata$weight , traindata$mpg, testdata$weight)
+print(final_TestPrediction30)
+final_TestPrediction50 = kNN(50, traindata$weight , traindata$mpg, testdata$weight)
+print(final_TestPrediction50)
+final_TestPrediction100 = kNN(100, traindata$weight , traindata$mpg, testdata$weight)
+print(final_TestPrediction100
+
+## calculating Mean Squared Error for different K values during Testing
+
+MSE = mean((testdata$mpg-final_TestPrediction2)^2)
+MSE
+MSE = mean((testdata$mpg-final_TestPrediction5)^2)
+MSE
+MSE = mean((testdata$mpg-final_TestPrediction10)^2)
+MSE
+MSE = mean((testdata$mpg-final_TestPrediction20)^2)
+MSE
+MSE = mean((testdata$mpg-final_TestPrediction30)^2)
+MSE
+MSE = mean((testdata$mpg-final_TestPrediction50)^2)
+MSE
+MSE = mean((testdata$mpg-final_TestPrediction100)^2)
+MSE
+#x = seq(-4,5,length=100)
+plot(traindata$weight,traindata$mpg,
+     col="blue",
+     xlab = "Weight",
+     ylab = "mpg",
+     main = "The best KNN model")
+points(testdata$weight,testdata$mpg,
+       col="green"
+)
+legend("topright",
+       legend = c("Training Set", "Testing Set"),
+       col = c("blue","green"),
+       pch=1,  text.col = "black",
+       horiz = FALSE)
+points(testdata$weight,final_TestPrediction30,
+       lwd=3, col="red"
+)
+legend("topright",
+       legend = c("Training Set", "Testing Set", "Estimation of Train Data"),
+       col = c("blue","green","red"),pch=1,
+       text.col = "black",
+       horiz = FALSE)
+
+
